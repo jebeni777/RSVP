@@ -127,24 +127,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RSVPForm; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Select */ "./components/Select.jsx");
 
 
 
+const guestsOptions = ["1", "2", "3", "4"];
 class RSVPForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
     this.state = {
-      RSVP: {
-        firstName: "",
-        lastName: "",
-        numGuests: "",
-        foodBring: ""
-      },
-      guestsOptions: ["1", "2", "3", "4"]
+      firstName: "",
+      lastName: "",
+      numGuests: "",
+      foodBring: ""
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -153,25 +150,17 @@ class RSVPForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   onChange(e) {
     let value = e.target.value;
     let name = e.target.name;
-    this.setState(prevState => ({
-      RSVP: { ...prevState.RSVP,
+    this.setState(prevState => {
+      return {
         [name]: value
-      }
-    }), () => console.log(this.state.RSVP));
+      };
+    }, () => console.log(this.state));
   }
 
   onSubmit(e) {
     e.preventDefault();
-    let userData = this.state.RSVP;
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('http://localhost:5000', {
-      RSVP: {
-        firstName,
-        lastName,
-        numGuest,
-        foodBring
-      }
-    });
-    console.log('A guest submitted: ' + this.state.RSVP);
+    let userData = this.state;
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('http://localhost:5000/RSVP', userData);
   }
 
   render() {
@@ -181,28 +170,28 @@ class RSVPForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       type: "text",
       title: "First Name",
       name: "firstName",
-      value: this.state.RSVP.firstName,
+      value: this.state.firstName,
       placeholder: "Enter your first name",
       onChange: this.onChange
     }), " ", react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
       type: "text",
       title: "Last Name",
       name: "lastName",
-      value: this.state.RSVP.lastName,
+      value: this.state.lastName,
       placeholder: "Enter your last name",
       onChange: this.onChange
-    }), " ", react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("select", {
+    }), " ", react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_Select__WEBPACK_IMPORTED_MODULE_2__["default"], {
       title: "Guests",
       name: "numGuests",
-      options: this.state.numGuests,
-      value: this.state.RSVP.numGuests,
+      options: guestsOptions,
+      value: this.state.numGuests,
       placeholder: "Number of Guests",
       onChange: this.onChange
     }), " ", react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
       type: "text",
       title: "Food Bringing",
       name: "foodBring",
-      value: this.state.RSVP.foodBring,
+      value: this.state.foodBring,
       placeholder: "Enter your what food you're bringing",
       onChange: this.onChange
     }), " ", react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("input", {
@@ -212,6 +201,41 @@ class RSVPForm extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
 }
+
+/***/ }),
+
+/***/ "./components/Select.jsx":
+/*!*******************************!*\
+  !*** ./components/Select.jsx ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const Select = props => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    id: props.name,
+    name: props.name,
+    value: props.value,
+    onChange: props.onChange
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: "",
+    disabled: true
+  }, props.placeholder), props.options.map(option => {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: option,
+      value: option,
+      label: option
+    }, option);
+  })));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Select);
 
 /***/ }),
 

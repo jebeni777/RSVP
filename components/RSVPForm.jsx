@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { render } from 'react-dom';
 import Axios from 'axios';
+import Select from './Select';
 
+const guestsOptions = ["1", "2", "3", "4"];
 export default class RSVPForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            RSVP: {
-                firstName: "",
-                lastName: "",
-                numGuests: "",
-                foodBring: ""
-            },
-
-            guestsOptions: ["1", "2", "3", "4"],
+            firstName: "",
+            lastName: "",
+            numGuests: "",
+            foodBring: ""
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
@@ -22,30 +19,18 @@ export default class RSVPForm extends React.Component {
     onChange(e) {
         let value = e.target.value;
         let name = e.target.name;
-        this.setState(
-            prevState => ({
-                RSVP: {
-                    ...prevState.RSVP,
-                    [name]: value
-                }
-            }),
-            () => console.log(this.state.RSVP)
-        );
+        this.setState(prevState => {
+            return {
+                [name]: value
+            }
+        }, () => console.log(this.state)
+        )
     }
 
     onSubmit(e) {
         e.preventDefault();
-        let userData = this.state.RSVP;
-        Axios.post('http://localhost:5000',
-            {
-                RSVP: {
-                    name: firstName,
-                    name: lastName,
-                    name: numGuest,
-                    name: foodBring
-                }
-            })
-        console.log('A guest submitted: ' + this.state.RSVP);
+        let userData = this.state;
+        Axios.post('http://localhost:5000/RSVP', userData)
     }
 
     render() {
@@ -55,7 +40,7 @@ export default class RSVPForm extends React.Component {
                     type="text"
                     title={"First Name"}
                     name={"firstName"}
-                    value={this.state.RSVP.firstName}
+                    value={this.state.firstName}
                     placeholder={"Enter your first name"}
                     onChange={this.onChange}
                 />{" "}
@@ -63,15 +48,15 @@ export default class RSVPForm extends React.Component {
                     type="text"
                     title={"Last Name"}
                     name={"lastName"}
-                    value={this.state.RSVP.lastName}
+                    value={this.state.lastName}
                     placeholder={"Enter your last name"}
                     onChange={this.onChange}
                 />{" "}
-                <select
+                <Select
                     title={"Guests"}
                     name={"numGuests"}
-                    options={this.state.numGuests}
-                    value={this.state.RSVP.numGuests}
+                    options={guestsOptions}
+                    value={this.state.numGuests}
                     placeholder={"Number of Guests"}
                     onChange={this.onChange}
                 />{" "}
@@ -79,7 +64,7 @@ export default class RSVPForm extends React.Component {
                     type="text"
                     title={"Food Bringing"}
                     name={"foodBring"}
-                    value={this.state.RSVP.foodBring}
+                    value={this.state.foodBring}
                     placeholder={"Enter your what food you're bringing"}
                     onChange={this.onChange}
                 />{" "}
